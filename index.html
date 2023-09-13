@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
-<body>
+<body>    
 
     <!-- Animated Background -->
     <lottie-player
@@ -53,8 +53,8 @@
             <div class="vertical-divider"></div>
             <h1>Latest news</h1>
         </div>
-        <div class="horizontal-scrollbar">
-            <div class="item">
+        <div class="horizontal-scrollbar" id="horizontal-scrollbar">
+            <!-- <div class="item">
                 <div class="news-tags">
                     <div class="news-tag">
                         <p>tag 1</p>
@@ -75,7 +75,7 @@
                 </div>
                 <div class="news-content">
                     <h2>News Title 1</h2>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo…</p>
+                    <p>HEJHEJHEJHEJE Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo…</p>
                 </div>
                 <div class="read-more-button">
                     <p>Read more</p>
@@ -220,9 +220,82 @@
                 <div class="read-more-button">
                     <p>Read more</p>
                 </div>
-            </div>
+            </div> -->
         </div>
     </section>
+
+
+
+    <!-- <div id="data-container"></div> -->
+
+    <script>
+        function fetchDataAndPopulate() {
+            const apiUrl = 'https://jsonplaceholder.typicode.com/posts';
+
+            fetch(apiUrl)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`Network response was not ok: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    const dataContainer = document.getElementById('horizontal-scrollbar');
+
+                    // Create an HTML string to display the data in a readable format
+                    let html = '';
+                    data.forEach(post => {
+
+                        html += 
+                        
+                            `
+                            <div class="item">
+                                <div class="news-tags">
+                                    <div class="news-tag">
+                                        <p>tag 1</p>
+                                    </div>
+                                    <div class="news-tag">
+                                        <p>tag 2</p>
+                                    </div>
+                                    <div class="news-tag">
+                                        <p>tag 3</p>
+                                    </div>
+                                </div>
+
+                                <div class="profile-info">
+                                    <img src="avatar-1.svg">
+                                    <div class="text-info">
+                                        <p>${post.userId}</p>
+                                        <p>05/05/2023</p>
+                                    </div>
+                                </div>
+
+                                <div class="news-content">
+                                    <h2>News Title 1: ${post.title}</h2>
+                                    <p>${post.body}</p>
+                                </div>
+
+                                <div class="read-more-button">
+                                    <p>Read more</p>
+                                </div>
+                            </div>`;
+
+                    });
+
+                    // Populate the data into the HTML element
+                    dataContainer.innerHTML = html;
+                })
+                .catch(error => {
+                    console.error('There was a problem fetching the data:', error);
+                });
+        }
+
+        // Call the function when the page loads
+        window.onload = fetchDataAndPopulate;
+    </script>
+
+
+
 
 
     <section class="section" id="section-3">

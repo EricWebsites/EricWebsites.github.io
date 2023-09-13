@@ -13,9 +13,9 @@ body {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -99;
+    width: 90vw;
+    height: 90vh;
+    z-index: -1;
 }
 
 .section {
@@ -112,7 +112,7 @@ body {
 // Section 1
 #section-1 {
     display: flex;
-    height: 60vh;
+    // height: 60vh;
     padding-top: 8vh;
     width: 85%;
     background-color: white;
@@ -144,7 +144,7 @@ body {
 
         h1 {
             color: #1B155F;
-            font-size: 80px;
+            font-size: 5vw;
             padding: 0;
             margin: 0;
         }
@@ -161,6 +161,8 @@ body {
         width: 60%;
 
         img {
+            width: auto;
+            height: 100%;
             padding: 0;
             margin: 0;
         }
@@ -211,7 +213,7 @@ body {
     @extend %box-section-template; //Includes styling for main/back card + header (H1)
 
     .horizontal-scrollbar {
-        max-height: 30vw;
+        // max-height: 30vw;
         display: flex;
         flex-direction: row;
         overflow-x: auto;
@@ -228,13 +230,17 @@ body {
 
             box-shadow: 0 4px 6px gray;
 
-            min-width: 25vw;
+            // min-width: 25vw;
+            width: 25vw;
+            height: 25vw;
             margin-right: 3vw;
 
             .news-tags {
                 display: flex;
                 align-items: center;
                 column-gap: 2vw;
+                height: 15%;
+                // background-color: red;
 
                 .news-tag {
                     display: flex;
@@ -254,11 +260,11 @@ body {
             }
 
             .profile-info {
-                // background-color: red;
                 display: flex;
                 flex-direction: row;
                 align-items: center;
                 height: 20%;
+                // background-color: blue;
 
                 img {
                     height: 100%;
@@ -269,6 +275,7 @@ body {
 
                 .text-info {
                     margin-left: 5%;
+                    
                     p {
                         margin: 0;
                         padding: 0;
@@ -277,17 +284,32 @@ body {
             }
 
             .news-content {
-                // background-color: orange;
                 display: flex;
                 flex-direction: column;
+                height: 50%;
+                // background-color: orange;
+                width: 100%;
 
                 h2 {
+                    text-overflow: ellipsis; //!Adds three dots to the ends, if text doesnt fit
+                    overflow-x: hidden; //!Limits the text from overflowing on x-axis
+                    white-space: nowrap; //!Limits the text to one row/line
+
                     // background-color: blue;
+                    height: 20%;
                     font-weight: normal;
                     color: #1B155F;
+                    
+                    max-width: 100%;
                 }
 
                 p {
+                    // background-color: purple;
+                    max-height: 100%;
+                    overflow: hidden; /* Hide any overflowing content */
+                    text-overflow: ellipsis; /* Add an ellipsis (...) for truncated text */
+                    white-space: normal; /* Allow text to wrap to multiple lines */
+                    // box-sizing: border-box;
                     color: #1B155F;
                     margin: 0;
                 }
@@ -300,10 +322,15 @@ body {
 
                 border-radius: 5px;
                 border: solid 1px gray;
-                height: 20vh;
+                height: 20%;
                 width: 15vw;
+                // background-color: yellow;
 
                 p {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    height: 100%;
                     color: #1B155F;
                     margin: 0;
                 }
@@ -545,6 +572,56 @@ body {
 
             p {
                 color: gray;
+            }
+        }
+    }
+}
+
+
+
+@media only screen and (max-width:1000px) {
+    body {
+        background-color: red;
+    }
+
+    .nav-bar {
+        #logo {
+            height: auto;
+            width: 40vw;
+        }
+        .nav-links{
+            display: none;
+        }
+    }
+
+    #section-1 {
+        display: flex;
+        flex-direction: column;
+
+        .left, .right {
+            width: 100%;
+            align-items: center;
+
+            img {
+                height: auto;
+                width: 80%;
+                background: url("lab-1.1.svg");
+                border-radius: 5px;
+            }
+        }
+    }
+
+    #section-2 {
+        .horizontal-scrollbar {
+            max-height: none;
+            display: flex;
+            flex-direction: row;
+            overflow-x: auto;
+            padding-bottom: 2vh;
+
+            .item {
+                min-width: 50vh;
+                min-height: 50vh;
             }
         }
     }
