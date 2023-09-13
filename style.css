@@ -249,7 +249,6 @@ body {
   max-width: 100%;
 }
 #section-2 .horizontal-scrollbar .item .news-content p {
-  background-color: purple;
   overflow: hidden;
   display: -webkit-box;
   -webkit-line-clamp: 5; /* number of lines to show */
