@@ -242,44 +242,55 @@
                 .then(data => {
                     const dataContainer = document.getElementById('horizontal-scrollbar');
 
+                    var userId = 1;
+                    let alreadyHaveThatUser = false;
+
                     // Create an HTML string to display the data in a readable format
                     let html = '';
                     data.forEach(post => {
 
-                        html += 
-                        
-                            `
-                            <div class="item">
-                                <div class="news-tags">
-                                    <div class="news-tag">
-                                        <p>tag 1</p>
-                                    </div>
-                                    <div class="news-tag">
-                                        <p>tag 2</p>
-                                    </div>
-                                    <div class="news-tag">
-                                        <p>tag 3</p>
-                                    </div>
-                                </div>
+                        if (userId == post.userId && !alreadyHaveThatUser) {
 
-                                <div class="profile-info">
-                                    <img src="avatar-1.svg">
-                                    <div class="text-info">
-                                        <p>${post.userId}</p>
-                                        <p>05/05/2023</p>
+                            html += 
+                                `
+                                <div class="item">
+                                    <div class="news-tags">
+                                        <div class="news-tag">
+                                            <p>tag 1</p>
+                                        </div>
+                                        <div class="news-tag">
+                                            <p>tag 2</p>
+                                        </div>
+                                        <div class="news-tag">
+                                            <p>tag 3</p>
+                                        </div>
                                     </div>
-                                </div>
 
-                                <div class="news-content">
-                                    <h2>News Title 1: ${post.title}</h2>
-                                    <p>${post.body}</p>
-                                </div>
+                                    <div class="profile-info">
+                                        <img src="avatar-1.svg">
+                                        <div class="text-info">
+                                            <p>${post.userId}</p>
+                                            <p>05/05/2023</p>
+                                        </div>
+                                    </div>
 
-                                <div class="read-more-button">
-                                    <p>Read more</p>
-                                </div>
-                            </div>`;
+                                    <div class="news-content">
+                                        <h2>News Title 1: ${post.title}</h2>
+                                        <p>${post.body}</p>
+                                    </div>
 
+                                    <div class="read-more-button">
+                                        <p>Read more</p>
+                                    </div>
+                                </div>`;
+
+                            userId ++;
+                            alreadyHaveThatUser = true;
+                        }
+
+                        else if (userId != post.userId) {
+                            alreadyHaveThatUser = false;
+                        }
                     });
 
                     // Populate the data into the HTML element

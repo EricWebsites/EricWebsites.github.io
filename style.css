@@ -189,8 +189,8 @@ body {
   padding: 2% 3% 2% 3%;
   row-gap: 2vh;
   box-shadow: 0 4px 6px gray;
-  width: 25vw;
-  height: 25vw;
+  width: 30vw;
+  height: 30vw;
   margin-right: 3vw;
 }
 #section-2 .horizontal-scrollbar .item .news-tags {
@@ -222,7 +222,7 @@ body {
 }
 #section-2 .horizontal-scrollbar .item .profile-info img {
   height: 100%;
-  width: auto;
+  width: 20%;
   background-color: gray;
   border-radius: 50%;
 }
@@ -249,12 +249,19 @@ body {
   max-width: 100%;
 }
 #section-2 .horizontal-scrollbar .item .news-content p {
+  background-color: purple;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 5; /* number of lines to show */
+  line-clamp: 5;
+  -webkit-box-orient: vertical;
   max-height: 100%;
   overflow: hidden; /* Hide any overflowing content */
   text-overflow: ellipsis; /* Add an ellipsis (...) for truncated text */
   white-space: normal; /* Allow text to wrap to multiple lines */
   color: #1B155F;
   margin: 0;
+  padding: 0;
 }
 #section-2 .horizontal-scrollbar .item .read-more-button {
   display: flex;
@@ -450,9 +457,6 @@ body {
 }
 
 @media only screen and (max-width: 1000px) {
-  body {
-    background-color: red;
-  }
   .nav-bar #logo {
     height: auto;
     width: 40vw;
