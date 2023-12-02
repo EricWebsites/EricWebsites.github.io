@@ -1,13 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="Styles/header-footer/header-footer.css">
+    <link rel="stylesheet" href="Styles/index/index.css">
+    <link rel="stylesheet" href="Styles/login-modal/login-modal.css">
     <script defer src="script.js"></script>
     <script src="https://unpkg.com/@lottiefiles/lottie-player@1/dist/lottie-player.js"></script>
-    <script src=&#x22;https://unpkg.com/@lottiefiles/lottie-interactivity@latest/dist/lottie-interactivity.min.js&#x22;></script>
+    <script type='text/javascript' src='https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js'></script>
+    <script type="text/javascript" src="//cdn.plu.mx/widget-popup.js"></script>
+
+    <!-- <script src=&#x22;https://unpkg.com/@lottiefiles/lottie-interactivity@latest/dist/lottie-interactivity.min.js&#x22;></script> -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+
+
+
+
+
+
+
+
 </head>
 <body>    
 
@@ -19,9 +32,30 @@
         loop>
     </lottie-player>
 
+    <!-- <div class="blob-container">
+
+        <div class="blob">
+            <div class="blob-1">
+
+            </div>
+    
+            <div class="blob-2">
+    
+            </div>
+    
+            <div class="blob-3">
+    
+            </div>
+    
+            <div class="blob-4">
+    
+            </div>
+        </div>
+    </div> -->
+
     <div class="nav-bar">
         <div id="logo">
-            <img src="norlin_lab_logo.svg">
+            <img src="Static-Assets/norlin_lab_logo.svg">
         </div>
         <div class="nav-links">
             <ul>
@@ -35,15 +69,126 @@
         <div class="contact-us">
             <p>Contact us</p>
         </div>
+
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="modal-box">
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-primary btn-lg show-modal" id="showModalButton">
+                            Login
+                        </button>
+                    </div> 
+                </div>
+            </div>
+        </div>
+
     </div>
+
+
+    <!-- Modal -->
+    <div class="parent-modal" id="parentModal">
+        <div class="modal" id="customModal">
+            <h1>Login to Norlin Lab</h1>
+            <p>Login here Using Email & Password</p>
+
+            <div class="form-group">
+                <span class="input-icon"><i class="fa fa-user"></i></span>
+                <input type="email" class="form-control" placeholder="Enter email" id="emailInput">
+            </div>
+
+            <div class="form-group">
+                <span class="input-icon"><i class="fas fa-key"></i></span>
+                <input type="password" class="form-control" placeholder="Password" id="passwordInput">
+            </div>
+            
+            <div class="remember-me">
+                <input type="checkbox">
+                <label>Remember me</label>
+            </div>
+
+            <a href="" class="forgot-pass">Forgot Password?</a>
+            <button class="btn" id="loginButton">Login</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+        const emailInput = document.getElementById('emailInput');
+        const passwordInput = document.getElementById('passwordInput');
+        const loginButton = document.getElementById('loginButton');
+        
+        loginButton.addEventListener('click', () => {
+            // Get user inputs
+            const username = emailInput.value;
+            const password = passwordInput.value;
+
+            // Prepare the data to be sent in the request
+            const data = {
+                username: username,
+                password: password,
+            };
+
+            const endpoint = 'http://localhost:8080/login';
+
+            // Make a POST request to check login credentials
+            fetch(endpoint, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Handle the response from the server
+                if (data.success) {
+                // Credentials are correct, redirect or perform other actions
+                console.log('Login successful');
+                } else {
+                // Credentials are incorrect, display an error message
+                console.error('Login failed');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+        });
+
+    </script>
+
+
+    <script>
+        // Get the modal and button elements
+        const showModalButton = document.getElementById('showModalButton');
+        const parentModal = document.getElementById('parentModal');
+        const customModal = document.getElementById('customModal');
+
+        // Show the custom modal when the button is clicked
+        showModalButton.addEventListener('click', () => {
+        parentModal.classList.add('active');
+        customModal.classList.add('active');
+        });
+
+        // Hide the custom modal when clicking outside of it
+        parentModal.addEventListener('click', (e) => {
+        if (e.target === parentModal) {
+            parentModal.classList.remove('active');
+            customModal.classList.remove('active');
+        }
+        });
+    </script>
+
 
     <section class="section" id="section-1">
         <div class="left">
-            <h1>Title 1: More than just a a lab</h1>
+            <h1>Title 1: More than just a lab</h1>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
         </div>
         <div class="right">
-            <img src="start-image.svg">
+            <img src="Static-Assets/start-image.svg">
         </div>
     </section>
 
@@ -230,10 +375,19 @@
 
     <script>
         function fetchDataAndPopulate() {
-            const apiUrl = 'https://jsonplaceholder.typicode.com/posts';
+            //const apiUrl = 'https://jsonplaceholder.typicode.com/posts';
+            const apiUrl = new URL('http://localhost:8080/all-posts');
+            // const apiUrl = new URL('http://localhost:8080/posts');
+
+            console.log("hej");
+
+            // fetch(apiUrl)
+            //     .then(response => response.json())
+            //     .then(data => console.log(data));
 
             fetch(apiUrl)
                 .then(response => {
+
                     if (!response.ok) {
                         throw new Error(`Network response was not ok: ${response.status}`);
                     }
@@ -242,55 +396,61 @@
                 .then(data => {
                     const dataContainer = document.getElementById('horizontal-scrollbar');
 
-                    var userId = 1;
-                    let alreadyHaveThatUser = false;
+                    data.sort((a, b) => {
+                        // Assuming 'date' property is in the format 'MM/DD/YYYY'
+                        const dateA = new Date(a.date);
+                        const dateB = new Date(b.date);
+
+                        // Compare dates and sort in ascending order
+                        return dateA - dateB;
+                    });
 
                     // Create an HTML string to display the data in a readable format
                     let html = '';
                     data.forEach(post => {
 
-                        if (userId == post.userId && !alreadyHaveThatUser) {
+                        const dateObj = new Date(post.date);
 
-                            html += 
-                                `
-                                <div class="item">
-                                    <div class="news-tags">
-                                        <div class="news-tag">
-                                            <p>tag 1</p>
-                                        </div>
-                                        <div class="news-tag">
-                                            <p>tag 2</p>
-                                        </div>
-                                        <div class="news-tag">
-                                            <p>tag 3</p>
-                                        </div>
+                        // Format the date as "MM/DD/YYYY HH:MM:SS" (you can adjust the format as needed)
+                        const formattedDate = `${(dateObj.getMonth() + 1).toString().padStart(2, '0')}/${dateObj.getDate().toString().padStart(2, '0')}/${dateObj.getFullYear()} ${dateObj.getHours().toString().padStart(2, '0')}:${dateObj.getMinutes().toString().padStart(2, '0')}:${dateObj.getSeconds().toString().padStart(2, '0')}`;
+
+                        let tags = '';
+
+                        post.tags.forEach(tag => {
+                            tags += `
+                                <div class="news-tag">
+                                    <p>${tag}</p>
+                                </div>
+                            `;
+                        })
+
+
+                        //HTML OUTPUT/ELEMENT
+                        html += 
+                            `
+                            <a href="news-page.html">
+                            <div class="item">
+                                
+                                <div class="news-tags">` 
+                            +
+                                    tags
+                            +
+                               `</div>
+
+                                <div class="profile-info">
+                                    <img src="Static-Assets/avatar-1.svg">
+                                    <div class="text-info">
+                                        <p>${post.user.username}</p>
+                                        <p>${formattedDate}</p>
                                     </div>
+                                </div>
 
-                                    <div class="profile-info">
-                                        <img src="avatar-1.svg">
-                                        <div class="text-info">
-                                            <p>${post.userId}</p>
-                                            <p>05/05/2023</p>
-                                        </div>
-                                    </div>
-
-                                    <div class="news-content">
-                                        <h2>News Title 1: ${post.title}</h2>
-                                        <p>${post.body}</p>
-                                    </div>
-
-                                    <div class="read-more-button">
-                                        <p>Read more</p>
-                                    </div>
-                                </div>`;
-
-                            userId ++;
-                            alreadyHaveThatUser = true;
-                        }
-
-                        else if (userId != post.userId) {
-                            alreadyHaveThatUser = false;
-                        }
+                                <div class="news-content">
+                                    <h2>News Title 1: ${post.newsTitle}</h2>
+                                    <p>${post.newsText}</p>
+                                </div>
+                            </div>
+                            </a>`;
                     });
 
                     // Populate the data into the HTML element
@@ -317,7 +477,7 @@
 
         <div class="card-layout">
             <div class="card">
-                <img src="lab-1.svg">
+                <img src="Static-Assets/lab-1.svg">
                 <div class="text-content">
                     <h3>Research Area Title 1</h3>
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo…</p>
@@ -328,7 +488,7 @@
             </div>
 
             <div class="card">
-                <img src="lab-2.svg">
+                <img src="Static-Assets/lab-2.svg">
                 <div class="text-content">
                     <h3>Research Area Title 2</h3>
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo…</p>
@@ -339,7 +499,7 @@
             </div>
             
             <div class="card">
-                <img src="lab-2.svg">
+                <img src="Static-Assets/lab-2.svg">
                 <div class="text-content">
                     <h3>Research Area Title 3</h3>
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo…</p>
@@ -350,7 +510,7 @@
             </div>
 
             <div class="card">
-                <img src="lab-1.svg">
+                <img src="Static-Assets/lab-1.svg">
                 <div class="text-content">
                     <h3>Research Area Title 4</h3>
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo…</p>
@@ -390,13 +550,20 @@
     <!-- LATEST PUBLICATIONS -->
     <section class="section" id="section-5">
         <h1>Latest publications</h1>
+
+        <div class="publication-cell">
+            <p>This is the cell</p>
+            <div class='altmetric-embed' data-badge-type='donut' data-doi="10.1016/j.ohx.2023.e00400"></div>
+        </div>
+
+
     </section>
 
     <!-- MEET OUR TEAM MEMBERS-->
     <section class="section" id="section-6">
         <div class="content">
             <h1>Meet our team members.</h1>
-            <img src="arrow-button.svg">
+            <img src="Static-Assets/arrow-button.svg">
         </div>
     </section>
 
@@ -421,10 +588,10 @@
     </section>
 
     <!-- FOOTER -->
-    <section class="section" id="section-8">
+    <section class="section" id="footer">
         <div class="content">
             <div class="top">
-                <img src="norlin_lab_logo_2.svg">
+                <img src="Static-Assets/norlin_lab_logo_2.svg">
             </div>
 
             <div class="bottom">
@@ -432,6 +599,7 @@
                 <p>Made with ❤️ in Sweden 🇸🇪</p>
             </div>
         </div>
+
     </section>
 
     
