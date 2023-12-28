@@ -4,22 +4,21 @@
     <link rel="stylesheet" href="Styles/header-footer/header-footer.css">
     <link rel="stylesheet" href="Styles/index/index.css">
     <link rel="stylesheet" href="Styles/login-modal/login-modal.css">
-    <script defer src="script.js"></script>
+
     <script src="https://unpkg.com/@lottiefiles/lottie-player@1/dist/lottie-player.js"></script>
-    <script type='text/javascript' src='https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js'></script>
+    <!-- <script type='text/javascript' src='https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js'></script> -->
+    <!-- Altmetric Badge -->
+    <script type="text/javascript" src="https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js"></script>
+
     <script type="text/javascript" src="//cdn.plu.mx/widget-popup.js"></script>
+
+    <script defer src="script.js"></script>
+
 
     <!-- <script src=&#x22;https://unpkg.com/@lottiefiles/lottie-interactivity@latest/dist/lottie-interactivity.min.js&#x22;></script> -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-
-
-
-
-
-
-
 
 </head>
 <body>    
@@ -115,49 +114,59 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-        const emailInput = document.getElementById('emailInput');
-        const passwordInput = document.getElementById('passwordInput');
-        const loginButton = document.getElementById('loginButton');
-        
-        loginButton.addEventListener('click', () => {
-            // Get user inputs
-            const username = emailInput.value;
-            const password = passwordInput.value;
-
-            // Prepare the data to be sent in the request
-            const data = {
-                username: username,
-                password: password,
-            };
-
-            const endpoint = 'http://localhost:8080/login';
-
-            // Make a POST request to check login credentials
-            fetch(endpoint, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data),
-            })
-            .then(response => response.json())
-            .then(data => {
-                // Handle the response from the server
-                if (data.success) {
-                // Credentials are correct, redirect or perform other actions
-                console.log('Login successful');
-                } else {
-                // Credentials are incorrect, display an error message
-                console.error('Login failed');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
+            const emailInput = document.getElementById('emailInput');
+            const passwordInput = document.getElementById('passwordInput');
+            const loginButton = document.getElementById('loginButton');
+    
+            loginButton.addEventListener('click', () => {
+                // Get user inputs
+                const username = emailInput.value;
+                const password = passwordInput.value;
+    
+                // Prepare the data to be sent in the request
+                const data = {
+                    username: username,
+                    password: password,
+                };
+    
+                const endpoint = 'http://localhost:8080/login';
+    
+                // Make a POST request to check login credentials
+                fetch(endpoint, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data),
+                })
+                .then(response => {
+                    // Check if the response status is OK (status code 200)
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+                    // Parse the JSON response
+                    return response.json();
+                })
+                .then(data => {
+                    // Handle the response from the server
+                    if (data.success) {
+                        // Credentials are correct, redirect to a new page
+                        console.log('Login successful');
+                        window.location.href = 'news-page.html'; // Update the path if needed
+                    } else {
+                        // Credentials are incorrect, display an error message
+                        console.error('Login failed');
+                    }
+                })
+                .catch(error => {
+                    // Handle non-JSON or HTTP errors
+                    console.error('Error:', error);
+                });
             });
         });
-        });
-
     </script>
+    
+    
 
 
     <script>
@@ -409,18 +418,20 @@
                     let html = '';
                     data.forEach(post => {
 
-                        const dateObj = new Date(post.date);
-
-                        // Format the date as "MM/DD/YYYY HH:MM:SS" (you can adjust the format as needed)
-                        const formattedDate = `${(dateObj.getMonth() + 1).toString().padStart(2, '0')}/${dateObj.getDate().toString().padStart(2, '0')}/${dateObj.getFullYear()} ${dateObj.getHours().toString().padStart(2, '0')}:${dateObj.getMinutes().toString().padStart(2, '0')}:${dateObj.getSeconds().toString().padStart(2, '0')}`;
+                        const dateObj = new Date();
+                        const options = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
+                        const formattedDate = dateObj.toLocaleString('en-US', options);
 
                         let tags = '';
 
+                        <!-- TODO: Make this link reference the correct tag! -->
                         post.tags.forEach(tag => {
                             tags += `
-                                <div class="news-tag">
-                                    <p>${tag}</p>
-                                </div>
+                                <a href="https://www.google.se" target="_blank">
+                                    <div class="news-tag">
+                                        <p>${tag}</p>
+                                    </div>
+                                </a>
                             `;
                         })
 
@@ -428,29 +439,39 @@
                         //HTML OUTPUT/ELEMENT
                         html += 
                             `
-                            <a href="news-page.html">
-                            <div class="item">
-                                
-                                <div class="news-tags">` 
-                            +
-                                    tags
-                            +
-                               `</div>
+                                <div class="item">
+                                    
+                                    <div class="news-tags">` 
+                                +
+                                        tags
+                                +
+                                    `</div>
 
-                                <div class="profile-info">
-                                    <img src="Static-Assets/avatar-1.svg">
-                                    <div class="text-info">
-                                        <p>${post.user.username}</p>
-                                        <p>${formattedDate}</p>
+                                    <div class="profile-info">
+                                        <div class="text-info">
+                                            <p>${post.user.username} | ${formattedDate}</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="test-class"> 
+                                        <img src="./Static-Assets/Chemical_Lab_Technology-min.jpg">
+                                    </div>
+
+
+                                    <div class="news-content">
+                                        <h2>News Title 1: ${post.newsTitle}</h2>
+                                        <p>${post.newsText}</p>
+                                    </div>
+
+                                    <div class="read-more-button-container">
+                                        <a href="news-page.html">
+                                            <div class="read-more-button">
+                                                <p>Read more</p>
+                                            </div>
+                                        </a>
                                     </div>
                                 </div>
-
-                                <div class="news-content">
-                                    <h2>News Title 1: ${post.newsTitle}</h2>
-                                    <p>${post.newsText}</p>
-                                </div>
-                            </div>
-                            </a>`;
+                            `;
                     });
 
                     // Populate the data into the HTML element
@@ -479,7 +500,7 @@
             <div class="card">
                 <img src="Static-Assets/lab-1.svg">
                 <div class="text-content">
-                    <h3>Research Area Title 1</h3>
+                    <h3>Spatial biology and spatial omics</h3>
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo…</p>
                     <div class="read-more-btn">
                         <p>Read more -> </p>
@@ -490,7 +511,7 @@
             <div class="card">
                 <img src="Static-Assets/lab-2.svg">
                 <div class="text-content">
-                    <h3>Research Area Title 2</h3>
+                    <h3>Light microscopy hardware and method development</h3>
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo…</p>
                     <div class="read-more-btn">
                         <p>Read more -> </p>
@@ -501,7 +522,7 @@
             <div class="card">
                 <img src="Static-Assets/lab-2.svg">
                 <div class="text-content">
-                    <h3>Research Area Title 3</h3>
+                    <h3>Digitalization of the life science lab</h3>
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo…</p>
                     <div class="read-more-btn">
                         <p>Read more -> </p>
@@ -512,7 +533,7 @@
             <div class="card">
                 <img src="Static-Assets/lab-1.svg">
                 <div class="text-content">
-                    <h3>Research Area Title 4</h3>
+                    <h3>Nanofabrication with light</h3>
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo…</p>
                     <div class="read-more-btn">
                         <p>Read more -> </p>
@@ -528,7 +549,7 @@
             <div class="content">
                 <h1>20+</h1>
                 <p class="kpi-title">Publications</p>
-                <p class="kpi-subtitle">Subtitle for pubications</p>
+                <p class="kpi-subtitle">Subtitle for publications</p>
             </div>
         </div>
         <div class="kpi-card" id="mid">
@@ -551,24 +572,187 @@
     <section class="section" id="section-5">
         <h1>Latest publications</h1>
 
-        <div class="publication-cell">
-            <p>This is the cell</p>
-            <div class='altmetric-embed' data-badge-type='donut' data-doi="10.1016/j.ohx.2023.e00400"></div>
-        </div>
+        <div class="publication-cell-container">
+
+            <div class="publication-cell">
+
+                <!-- TODO: Make this reference the publication page! -->
+                <a href="https://google.se"><h2>This is the title of the publication</h2></a> 
+                <p>F1. Lastname1, F2 Lastname2, F3 Lastname3, F4 Lastname4, et.al., other relevant information that follows the publication</p>
+
+                <div class="tags-container">
+                    <div class="publication-tag">
+                        <p>Tag 1</p>
+                    </div>
+                    <div class="publication-tag">
+                        <p>Tag 1</p>
+                    </div>
+                    <div class="publication-tag">
+                        <p>Tag 1</p>
+                    </div>
+                    <div class="publication-tag">
+                        <p>Tag 1</p>
+                    </div>
+                    <div class="publication-tag">
+                        <p>Tag 1</p>
+                    </div>
+                    <div class="publication-tag">
+                        <p>Tag 1</p>
+                    </div>
+                    <div class="publication-tag">
+                        <p>Tag 1</p>
+                    </div>
+                </div>
 
 
+                <div class="widget-container">
+
+                    <div class='altmetric-embed' data-badge-type='donut' data-doi="10.1016/j.ohx.2023.e00400" data="data-link-target"></div>  
+                    
+                    <a href="https://plu.mx/plum/a/?doi=10.1016%2Fj.ohx.2023.e00400" 
+                        data-popup="right" 
+                        data-size="large" 
+                        class="plumx-plum-print-popup" 
+                        data-site="plum" 
+                        data-hide-when-empty="true">High-Fidelity Tissue Engineering of Patient-Specific Auricles for Reconstruction of Pediatric Microtia and Other Auricular Deformities</a>
+
+                    <!-- <a target="_blank" class="plx-wrapping-print-link" href="https://plu.mx/plum/a/?doi=10.1016/j.ohx.2023.e00400" title="PlumX Metrics Detail Page" aria-label="PlumX Metrics Detail Page" rel="noopener">
+                        <div class="plx-print">
+                            <svg viewBox="0 0 100 100" width="100%" height="100%" aria-labelledby="widget-plumprint-8">
+                                <title id="widget-plumprint-8">Plum Print visual indicator of research metrics</title>
+
+                                <path fill="#6e1a62" stroke="#6e1a62" stroke-width="1" d="M 36.075524746876404,57.96956599135724 C 47.24224000477168,47.68596460512846 53.05297314616313,51.90770935123954 46.72339182284403,65.70569425459581 L 53.27660817715597,65.70569425459581 C 46.94702685383687,51.90770935123954 53.4701141297074,47.088228513619455 65.3057820791392,61.6976828705037 L 69.25836329149949,49.532888743874246 C 51.0958849656137,54.395354525432005 48.651416263702714,46.662138123559565 61.88240715909315,39.21976840364822 L 56.58074376063895,35.36788447550181 C 53.59123058093537,50.25112330547885 45.481122358905864,50.315990707004524 44.49308766305323,31.53986278203334 L 34.14509570579973,39.058119018435434 C 51.696935007584436,45.79993847162591 49.12908117584119,53.493064614593585 34.05046952557818,51.73708687489691 Z">
+                                </path>
+
+                                <circle fill="#6e1a62" stroke="#6e1a62" stroke-width="1" r="4" cx="32.880982706687234" cy="55.56230589874905">
+                                </circle>
+
+                                <circle fill="#6e1a62" stroke="#6e1a62" stroke-width="1" r="4" cx="50" cy="68">
+                                </circle>
+
+                                <circle fill="#c43bf3" stroke="#6e1a62" stroke-width="1" r="7.807354922057604" cx="71.54101295943693" cy="56.999099387329345">
+                                </circle>
+
+                                <circle fill="none" stroke="#ffffff" stroke-width="1.5" r="6.307354922057604" cx="71.54101295943693" cy="56.999099387329345">
+                                </circle>
+
+                                <circle fill="#6e1a62" stroke="#6e1a62" stroke-width="1" r="4" cx="60.58013454126452" cy="35.43769410125095">
+                                </circle>
+
+                                <circle fill="#fd5704" stroke="#6e1a62" stroke-width="1" r="7.807354922057604" cx="36.68692183896603" cy="31.676119913333213">
+                                </circle>
+
+                                <circle fill="none" stroke="#ffffff" stroke-width="1.5" r="6.307354922057604" cx="36.68692183896603" cy="31.676119913333213">
+                                </circle>
+
+                            </svg>
+                        </div>
+                    </a> -->
+
+
+                </div>            
+            </div>
+
+
+            <div class="publication-cell">
+                <!-- TODO: Make this reference the publication page! -->
+                <a href="https://google.se"><h2>This is the title of the publication</h2></a> 
+                <p>F1. Lastname1, F2 Lastname2, F3 Lastname3, F4 Lastname4, et.al., other relevant information that follows the publication</p>
+
+                <div class="tags-container">
+                    <div class="publication-tag">
+                        <p>Tag 1</p>
+                    </div>
+                    <div class="publication-tag">
+                        <p>Tag 1</p>
+                    </div>
+                    <div class="publication-tag">
+                        <p>Tag 1</p>
+                    </div>
+                    <div class="publication-tag">
+                        <p>Tag 1</p>
+                    </div>
+                    <div class="publication-tag">
+                        <p>Tag 1</p>
+                    </div>
+                    <div class="publication-tag">
+                        <p>Tag 1</p>
+                    </div>
+                    <div class="publication-tag">
+                        <p>Tag 1</p>
+                    </div>
+                </div>
+
+
+                <div class="widget-container">
+
+                    <div class='altmetric-embed' data-badge-type='donut' data-doi="10.1016/j.ohx.2023.e00400" data="data-link-target"></div>  
+                    
+                    <a href="https://plu.mx/plum/a/?doi=10.1016%2Fj.ohx.2023.e00400" 
+                        data-popup="right" 
+                        data-size="large" 
+                        class="plumx-plum-print-popup" 
+                        data-site="plum" 
+                        data-hide-when-empty="true">High-Fidelity Tissue Engineering of Patient-Specific Auricles for Reconstruction of Pediatric Microtia and Other Auricular Deformities</a>
+                </div>            
+            </div>
+
+            <div class="publication-cell">
+                <!-- TODO: Make this reference the publication page! -->
+                <a href="https://google.se"><h2>This is the title of the publication This is the title of the publication</h2></a> 
+                <p>F1. Lastname1, F2 Lastname2, F3 Lastname3, F4 Lastname4, et.al., other relevant information that follows the publication</p>
+
+                <div class="tags-container">
+                    <div class="publication-tag">
+                        <p>Tag 1</p>
+                    </div>
+                    <div class="publication-tag">
+                        <p>Tag 1</p>
+                    </div>
+                    <div class="publication-tag">
+                        <p>Tag 1</p>
+                    </div>
+                    <div class="publication-tag">
+                        <p>Tag 1</p>
+                    </div>
+                    <div class="publication-tag">
+                        <p>Tag 1</p>
+                    </div>
+                    <div class="publication-tag">
+                        <p>Tag 1</p>
+                    </div>
+                    <div class="publication-tag">
+                        <p>Tag 1</p>
+                    </div>
+                </div>
+
+
+                <div class="widget-container">
+
+                    <div class='altmetric-embed' data-badge-type='donut' data-doi="10.1016/j.ohx.2023.e00400" data="data-link-target"></div>  
+                    
+                    <a href="https://plu.mx/plum/a/?doi=10.1016%2Fj.ohx.2023.e00400" 
+                        data-popup="right" 
+                        data-size="large" 
+                        class="plumx-plum-print-popup" 
+                        data-site="plum" 
+                        data-hide-when-empty="true">High-Fidelity Tissue Engineering of Patient-Specific Auricles for Reconstruction of Pediatric Microtia and Other Auricular Deformities</a>
+                </div>            
+            </div>
     </section>
 
     <!-- MEET OUR TEAM MEMBERS-->
     <section class="section" id="section-6">
         <div class="content">
             <h1>Meet our team members.</h1>
-            <img src="Static-Assets/arrow-button.svg">
+            <a href="./team-page.html">
+                <img src="Static-Assets/arrow-button.svg">
+            </a>
         </div>
     </section>
 
     <!-- FAQ -->
-    <section class="section" id="section-7">
+    <!-- <section class="section" id="section-7">
         <h1>FAQ</h1>
 
         <button class="accordion">Section 1</button>
@@ -585,7 +769,7 @@
         <div class="panel">
             <p>Lorem ipsum...</p>
         </div>
-    </section>
+    </section> -->
 
     <!-- FOOTER -->
     <section class="section" id="footer">
