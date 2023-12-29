@@ -312,7 +312,7 @@
   padding: 2% 3% 2% 3%;
   row-gap: 2vh;
   box-shadow: 0 4px 6px gray;
-  width: 30vw;
+  min-width: 25vw;
   height: 50vh;
 }
 #section-5 .publication-cell-container .publication-cell h2 {
